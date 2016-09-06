@@ -1,0 +1,36 @@
+<div>
+
+  <% if ( isPending() ) { %>
+      
+    <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate custom-progress__indeterminate">
+    </div>
+    
+  <% } else { %>
+
+
+    <div class="mdl-grid">
+
+      <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--middle custom-cell--center">
+        <div class="mdl-card" style="width: 100%; height: 100%; margin: 0 auto;">
+
+          <div class="mdl-card__title">
+            <span class="mdl-card__subtitle-text">
+              <a href="/compose"><%= getHeader('From') %></a> to 
+              <a href><%= getHeader('To') %></a>
+            </span>
+          </div>
+          <div class="mdl-card__title">
+            <h2 class="mdl-card__title-text"><%= getHeader('Subject') %></h2>
+          </div>
+          <div class="mdl-card__supporting-text">
+            <%= getBody() %>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+  <% } %>
+
+</div>

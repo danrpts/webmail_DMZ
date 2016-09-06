@@ -1,0 +1,51 @@
+.chips-textfield .mdl-textfield__label:after {
+  bottom: 0px;
+}
+
+.search-form {
+  height: 36px;
+  width: 100%;
+  display: inline-block;
+  position: relative;
+  text-align: left;
+  vertical-align: top;
+}
+
+.search-toggle {
+  position: absolute;
+  left: 24px;
+  top: 2px;
+  color: #757575;
+  cursor: pointer;
+}
+
+.search-field {
+  font-size: 14px;
+  color: #212121;
+  height: 36px;
+  width: 100%;
+  float: left;
+  padding: 8px 0 8px 72px;
+  vertical-align: middle;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  border: none;
+  outline: none;
+}
+
+.search-field::-webkit-input-placeholder {
+  color: #757575;
+}
+ 
+.search-field:-moz-placeholder { /* Firefox 18- */
+  color: #757575;
+}
+ 
+.search-field::-moz-placeholder {  /* Firefox 19+ */
+  color: #757575;
+}
+ 
+.search-field:-ms-input-placeholder {  
+  color: #757575;
+}
