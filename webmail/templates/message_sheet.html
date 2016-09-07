@@ -7,37 +7,25 @@
     
   <% } else { %>
 
-
-    <div class="mdl-grid">
-
-      <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center"></div>
-
-      <div class="mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--2-col-phone mdl-cell--middle custom-cell--center">
-
-        <ul class="demo-list-two mdl-list">
-          <li class="mdl-list__item mdl-list__item--two-line">
-            <span class="mdl-list__item-primary-content">
-              <span><%= getHeader('From') %></span>
-              <span class="mdl-list__item-sub-title"><%= getHeader('To') %></span>
-            </span>
-            <span class="mdl-list__item-secondary-content"> 
-              <i class="material-icons mdl-list__item-avatar">person</i>
-            </span>
-          </li>
-          <li class="mdl-list__item mdl-list__item--two-line">
-            <span class="mdl-list__item-primary-content">
-              <span><%= getHeader('Subject') %></span>
-              <span class="mdl-list__item-sub-title"><%= getHeader('Date') %></span>
-            </span>
-          </li>
-        </ul>
-
-        <%= getBody() %>
-        
+    <div class="mdl-grid" style="border-bottom: 1px solid rgba(0,0,0,.12)">
+      
+      <div class="mdl-cell mdl-cell--11-col-desktop mdl-cell--7-col-tablet mdl-cell--3-col-phone mdl-cell--middle custom-cell--center">
+        <span><%= getHeader('From') %></span>
+        <span class="mdl-list__item-sub-title">To: <%= getHeader('To') %></span>
       </div>
+    </div>
 
-      <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center"></div>
+    <div class="mdl-grid" style="border-bottom: 1px solid rgba(0,0,0,.12)">
+      <div class="mdl-cell mdl-cell--11-col-desktop mdl-cell--7-col-tablet mdl-cell--3-col-phone mdl-cell--middle custom-cell--center">
+        <span><%= getHeader('Subject') %></span>
+        <span class="mdl-list__item-sub-title"><%= getHeader('Date') %></span>
+      </div>
+    </div>
 
+    <div class="mdl-grid mdl-grid--no-spacing">
+      <div class="mdl-cell mdl-cell--12-col-desktop mdl-cell--8-col-tablet mdl-cell--4-col-phone mdl-cell--middle custom-cell--center">
+        <%= getBody() %>
+      </div>
     </div>
 
   <% } %>

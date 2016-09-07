@@ -12,6 +12,8 @@ module.exports = function (options) {
 
   .done(function(account) {
 
+    options = options || {};
+
     // Do this first so events aren't caught on old view
     if (this.active) this.active.remove();
 
@@ -20,12 +22,16 @@ module.exports = function (options) {
     // Check the search bar for state
     var queries = search.getValues();
 
-    // maybe trade the account as a token for the messages
+    // Thought: Maybe trade the account as a token for the messages
     var messages = require('../singletons/messages.js');
 
-    // Call before view creation so that it misses the request event
-    messages.refresh(queries, options);
+    // Only fetch collection in the handler when:
+    // 1) It's initially empty (viewed draft directly via url),
+    // 2) Or we viewed a message directly via the url
+    // Otherwise we may call refresh directly from a click event.
+    if (messages.isEmpty() || messages.length < 2) messages.refresh(queries, options);
 
+    // Fetch before view creation so that it misses the request event
     var messagesPage = new MessagesPage({ collection: messages });
 
     this.active = messagesPage;

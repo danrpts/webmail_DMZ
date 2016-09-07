@@ -21,6 +21,10 @@ module.exports = Model.extend({
 
   },
 
+  send: function (options) {
+
+  },
+
   fetch: function (options) {
 
     var account = require('../singletons/account.js');

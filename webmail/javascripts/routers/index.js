@@ -11,7 +11,7 @@ module.exports = Router.extend({
   routes: {
     '':             require('../handlers/messages.js'),
     'messages/:id': require('../handlers/message.js'),
-    'drafts(/:id)':   require('../handlers/draft.js'),
+    'drafts(/:id)': require('../handlers/draft.js'),
     'login':        require('../handlers/login.js')
   },
 
