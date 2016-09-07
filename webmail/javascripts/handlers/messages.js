@@ -2,8 +2,6 @@
 
 var $ = require('jquery');
 
-var _ = require('underscore');
-
 var MessagesPage = require('../views/Messages_Page.js');
 
 var $region = $('body');

@@ -135,7 +135,7 @@ module.exports = Collection.extend({
   },
 
     // Local collection filtering
-  filter: function (value, options) {
+  filter: function (pattern, options) {
 
     // TODO: Implement collection filtering for pattern
 

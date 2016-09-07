@@ -6,7 +6,7 @@ var LoginPage = require('../views/Login_Page.js');
 
 var $region = $('body');
 
-module.exports = function () {
+module.exports = function (options) {
 
   this.authenticate()
 

@@ -6,7 +6,7 @@ var MessagePage = require('../views/Message_Page.js');
 
 var $region = $('body');
 
-module.exports = function (id) {
+module.exports = function (id, options) {
 
   this.authenticate().
 

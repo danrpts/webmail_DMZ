@@ -47,6 +47,10 @@ a.clear {
   text-decoration: none !important;
 }
 
+.draft-input {
+  width: 100%;
+}
+
 .custom-layout-title {
   font-family: 'Pacifico', cursive;
 }

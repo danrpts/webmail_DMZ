@@ -7,19 +7,7 @@
 
   <% } else if ( isEmpty() ) { %>
  
-    <ul>
-      <li class="mdl-grid list-item">
-            
-        <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center"></div>
-
-        <div class="mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--2-col-phone mdl-cell--middle">
-          <h3>Nothing</h3>
-        </div>
-
-        <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center"></div>
-
-      </li>
-    </ul>
+    <h3>No Results Found</h3>
 
   <% } else { %>
 
@@ -55,20 +43,20 @@
 
     </ul>
 
-  <% } %>
+    <div class="mdl-grid">
 
-  <div class="mdl-grid">
+      <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center"></div>
 
-    <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center"></div>
+      <div class="mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--2-col-phone mdl-cell--middle custom-cell--center">
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="more">
+          <i class="material-icons">arrow_downward</i>
+        </button>
+      </div>
 
-    <div class="mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--2-col-phone mdl-cell--middle custom-cell--center">
-      <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab" id="more">
-        <i class="material-icons">arrow_downward</i>
-      </button>
+      <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center"></div>
+
     </div>
 
-    <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center"></div>
-
-  </div>
+  <% } %>
 
 </div>

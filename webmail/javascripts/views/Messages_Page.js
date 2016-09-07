@@ -4,14 +4,6 @@ var _ = require('underscore');
 
 var View = require('../../../architecture/classes/View.js');
 
-var ToolBar = require('./Tool_Bar.js');
-
-var DraftSheet = require('./Draft_Sheet.js');
-
-var MessagesSheet = require('./Messages_Sheet.js');
-
-var MessagesActions = require('./Messages_Actions.js');
-
 module.exports = View.extend({
 
   template: require('../../templates/page.html'),
@@ -38,24 +30,22 @@ module.exports = View.extend({
 
   toolBar: function () {
     var account = require('../singletons/account.js');
+    var ToolBar = require('./Tool_Bar.js');
     return new ToolBar({ model: account });
   },
 
-  draftSheet: function () {
-    return new DraftSheet();
-  },
-
   messagesSheet: function () {
+    var MessagesSheet = require('./Messages_Sheet.js');
     return new MessagesSheet({ collection: this.collection });
   },
 
   messagesActions: function () {
+    var MessagesActions = require('./Messages_Actions.js');
     return new MessagesActions({ collection: this.collection });
   },
 
   events: {
-    'click #title': 'onTitleClick',
-    'click #compose': 'onComposeClick'
+    'click #title': 'onTitleClick'
   },
 
   onTitleClick: function (event) {
@@ -64,12 +54,8 @@ module.exports = View.extend({
 
     event.preventDefault();
 
-    return this.collection.refresh(search.getValues());
+    this.collection.refresh(search.getValues());
 
-  },
-
-  onComposeClick: function () {
-    
   }
 
 });
