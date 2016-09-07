@@ -40,6 +40,30 @@ module.exports = View.extend({
 
   messageActions: function () {
     return new MessageActions({ model: this.model });
+  },
+
+  events: {
+    'click #delete': 'onDeleteClick',
+    'click #ignore': 'onIgnoreClick',
+    'click #forward': 'onForwardClick',
+    'click #respond': 'onRespondClick',
+
+  },
+
+  onDeleteClick: function (event) {
+    this.model.delete();
+  },
+
+  onIgnoreClick: function (event) {
+    this.model.ignore();
+  },
+
+  onForwardClick: function (event) {
+    this.model.forward();
+  },
+
+  onRespondClick: function (event) {
+    this.model.respond();
   }
 
 });

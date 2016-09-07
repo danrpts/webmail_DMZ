@@ -15,13 +15,43 @@ module.exports = Model.extend({
     'threadId' : undefined
   },
 
-  delete: function () {
+  // Todo: Delete from local and remote collection, goto next message
+  delete: function () {},
 
-    this.destroy();
+  // Todo: Keep marked as unread (unprocesses), goto next message
+  ignore: function () {},
 
-  },
+  // Todo: Open dialog to send to someone else, goto next message
+  forward: function () {},
 
-  send: function (options) {
+  // Todo: Mark as read (processed), open message in composer in reply mode
+  respond: function () {},
+
+
+  send: function (data) {
+
+    var model = this;
+
+    var promise = $.Deferred();
+
+    var account = require('../singletons/account.js');
+
+    var options = {
+      url: 'https://www.googleapis.com/gmail/v1/users/me/messages/send',
+      type: 'POST',
+      beforeSend: function (xhr) {
+        xhr.setRequestHeader('Authorization', 'Bearer ' + account.get('token'));
+      },
+      success: function (result) {
+        promise.resolveWith(collection, result);
+      }
+    }
+
+    if (data) options.data = data;
+
+    $.ajax(options);
+
+    return promise;
 
   },
 
@@ -66,6 +96,7 @@ module.exports = Model.extend({
 
   },
 
+  // Todo: Needs work or rewrite, does not handle all message body types
   getBody: function () {
 
     function recursePayload (payload) {
@@ -111,6 +142,10 @@ module.exports = Model.extend({
 
   getHeader: function (name) {
     return this.getHeaders()[name];
-  }
+  },
+
+
+  // Todo: Return models headers and body into and RFC2822 compliant string
+  toRFC2822: function () {} 
 
 });

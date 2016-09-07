@@ -104,6 +104,7 @@ module.exports = Collection.extend({
 
   },
 
+  // Todo: Needs rewrite
   parse: function(response) {
 
     // Not the same delimiter in the response as we specify ourselves in the request,
