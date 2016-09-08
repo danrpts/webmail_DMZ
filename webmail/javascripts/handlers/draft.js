@@ -2,6 +2,8 @@
 
 var $ = require('jquery');
 
+var Draft = require('../models/Google_Draft.js');
+
 var DraftPage = require('../views/Draft_Page.js');
 
 var $region = $('body');
@@ -15,7 +17,9 @@ module.exports = function (id, options) {
     // Do this first so events aren't caught on old view
     if (this.active) this.active.remove();
 
-    var draftPage = new DraftPage();
+    var draft = new Draft();
+
+    var draftPage = new DraftPage({ model: draft });
 
     this.active = draftPage;
 

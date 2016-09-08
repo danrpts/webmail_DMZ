@@ -1,5 +1,6 @@
 
 .list-item {
+  background-color: #ffffff;
   color: rgba(0,0,0,.54);
   transition-duration: .28s;
   transition-timing-function: cubic-bezier(.4,0,.2,1);

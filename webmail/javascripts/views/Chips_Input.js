@@ -21,10 +21,10 @@ var ChipsList = View.extend({
   },
 
   events: {
-    'click .chip-delete': 'onChipDeleteClick'
+    'click .delete': 'onDeleteClick'
   },
 
-  onChipDeleteClick: function (event) {
+  onDeleteClick: function (event) {
     var cid = event.currentTarget.id;
     this.collection.remove(cid);
   }
@@ -52,14 +52,13 @@ module.exports = View.extend({
   },
 
   events: {
-    'keydown #chip-input': 'onChipInputKeydown'
+    'keydown input': 'onInputKeydown'
   },
 
-  onChipInputSelect: function (event) {
-    // TODO
-  },
+  // Todo: fetch data list items and find select event
+  onInputSelect: function (event) {},
 
-  onChipInputEnter: function (event) {
+  onInputEnter: function (event) {
     var $input = this.$(event.currentTarget);
     var value = $input.val().trim();
     var collection = this.collection;
@@ -70,16 +69,16 @@ module.exports = View.extend({
     }
   },
 
-  onChipInputBackspace: function (event) {
+  onInputBackspace: function (event) {
     var $input = this.$(event.currentTarget);
     var value = $input.val();
     if (!value) this.collection.pop();
   },
 
-  onChipInputKeydown: function (event) {
+  onInputKeydown: function (event) {
     switch (event.which) {
-      case 13: this.onChipInputEnter.apply(this, arguments); break;
-      case 8: this.onChipInputBackspace.apply(this, arguments); break;
+      case 13: this.onInputEnter.apply(this, arguments); break;
+      case 8: this.onInputBackspace.apply(this, arguments); break;
     }
   }
 

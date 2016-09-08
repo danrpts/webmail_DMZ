@@ -32,13 +32,29 @@ module.exports = View.extend({
   },
 
   draftSheet: function () {
-    return new DraftSheet();
+    return new DraftSheet({ model: this.model });
   },
 
   draftActions: function () {
-    return new DraftActions();
+    return new DraftActions({ model: this.model });
   },
 
-  events: {}
+  events: {
+    'click #discard': 'onDiscardClick',
+    'click #save': 'onSaveClick',
+    'click #send': 'onSendClick',
+  },
+
+  onDiscardClick: function (event) {
+    this.model.discard();
+  },
+
+  onSaveClick: function (event) {
+    this.model.forward();
+  },
+
+  onSendClick: function (event) {
+    this.model.send();
+  }
 
 });

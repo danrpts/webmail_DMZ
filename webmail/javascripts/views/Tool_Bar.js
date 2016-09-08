@@ -11,10 +11,10 @@ module.exports = View.extend({
   template: require('../../templates/tool_bar.html'),
 
   defaultViews: {
-    'div#input': 'searchInput'
+    '#search-chips': 'searchChips'
   },
 
-  searchInput: function () {
+  searchChips: function () {
     var search = require('../singletons/search.js');
     var SearchInput = require('./Chips_Input.js');
     return new SearchInput({ collection: search });

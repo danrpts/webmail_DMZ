@@ -27,6 +27,7 @@ html, body{
 }
 
 header {
+  background-color: #ffffff;
   z-index: 3;
 }
 

@@ -43,15 +43,15 @@ module.exports = View.extend({
   },
 
   events: {
-    'click #delete': 'onDeleteClick',
+    'click #archive': 'onArchiveClick',
     'click #ignore': 'onIgnoreClick',
     'click #forward': 'onForwardClick',
     'click #respond': 'onRespondClick',
 
   },
 
-  onDeleteClick: function (event) {
-    this.model.delete();
+  onArchiveClick: function (event) {
+    this.model.archive();
   },
 
   onIgnoreClick: function (event) {
