@@ -21,10 +21,11 @@ var ChipsList = View.extend({
   },
 
   events: {
-    'click .delete': 'onDeleteClick'
+    'click .chip-delete': 'onDeleteClick'
   },
 
   onDeleteClick: function (event) {
+    console.log(event);
     var cid = event.currentTarget.id;
     this.collection.remove(cid);
   }
@@ -44,7 +45,7 @@ module.exports = View.extend({
   },
 
   defaultViews: {
-    'div#list': 'listView'
+    '#chip-list': 'listView'
   },
   
   listView: function () {
@@ -52,7 +53,7 @@ module.exports = View.extend({
   },
 
   events: {
-    'keydown input': 'onInputKeydown'
+    'keydown #chip-input': 'onInputKeydown'
   },
 
   // Todo: fetch data list items and find select event

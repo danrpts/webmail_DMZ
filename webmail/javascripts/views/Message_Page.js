@@ -16,7 +16,9 @@ module.exports = View.extend({
 
   initialize: function () {
     var search = require('../singletons/search.js');
-    this.listenTo(search, 'update', window.transition.to);
+    this.listenTo(search, 'update', function () {
+      window.transition.to('/');
+    });
   },
 
   prerender: function () {},
