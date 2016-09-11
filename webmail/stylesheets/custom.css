@@ -17,7 +17,7 @@ html, body{
   width: 100%;
   overflow: hidden;
   letter-spacing: 0 !important;
-  font-weight: 400 !important;
+  font-weight: 300 !important;
   font-size: 14px !important;
   line-height: 18px !important;
   font-family: "Roboto", sans-serif !important;
@@ -88,3 +88,15 @@ a.clear {
   width: 100%; 
 }
 
+.custom-chip {
+  margin: 0px;
+}
+
+.custom-chip-textfield__input {
+  margin: 2px 0;
+  width: 100%;
+  border: none;
+  line-height: 32px;
+  padding: 0;
+  font-size: 13px;
+}

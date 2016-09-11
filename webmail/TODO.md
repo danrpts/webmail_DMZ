@@ -10,3 +10,6 @@
 [ ] Fix html so that actions are in the same html as its page (fixes a a much larger: view structure should be independent of the html structure)
 [ ] Better loader at top of the page that any module can use
 [ ] backbone adds the extra wrapper div in the view just in case there is no root div in the template so... need to allow backbone to do that so i dont have to code my own div tag all th time
+[ ] need to refresh gauth token
+[ ] infinite scrolling
+[ ] pull up to refresh
