@@ -34,7 +34,7 @@ var ChipsList = View.extend({
 
 module.exports = View.extend({
 
-  template: require('../../templates/chips_input.html'),
+  //template: override this in further extension
 
   initialize: function () {},
 

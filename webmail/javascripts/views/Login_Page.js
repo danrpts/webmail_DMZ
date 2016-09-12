@@ -6,7 +6,7 @@ var View = require('../../../architecture/classes/View.js');
 
 module.exports = View.extend({
 
-  template: require('../../templates/page.html'),
+  template: require('../../templates/login_page.html'),
 
   prerender: function () {},
 

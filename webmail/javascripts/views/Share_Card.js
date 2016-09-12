@@ -18,9 +18,9 @@ module.exports = View.extend({
 
   shareChips: function () {
     var Chips = require('../models/Chips.js');
-    var ChipsInput = require('./Chips_Input.js');
+    var ShareInput = require('./Share_Input.js');
     var chips = new Chips();
-    return new ChipsInput({ collection: chips });
+    return new ShareInput({ collection: chips });
   },
 
   events: {

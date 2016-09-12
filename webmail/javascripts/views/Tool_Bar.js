@@ -10,13 +10,17 @@ module.exports = View.extend({
 
   template: require('../../templates/tool_bar.html'),
 
+  postrender: function () {
+    componentHandler.upgradeElements(this.el);
+  },
+  
   defaultViews: {
-    '#search-chips': 'searchChips'
+    '#search': 'searchChips'
   },
 
   searchChips: function () {
     var search = require('../singletons/search.js');
-    var SearchInput = require('./Chips_Input.js');
+    var SearchInput = require('./Search_Input.js');
     return new SearchInput({ collection: search });
   },
 

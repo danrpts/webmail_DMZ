@@ -27,11 +27,6 @@ html, body{
     width: 0px;  /* remove scrollbar space */
 }
 
-header {
-  background-color: #ffffff;
-  z-index: 3;
-}
-
 main {
   z-index: 0;
 }
@@ -51,10 +46,6 @@ a.clear {
 
 .draft-input {
   width: 100%;
-}
-
-.custom-layout-title {
-  font-family: 'Pacifico', cursive;
 }
 
 .custom-cell--center {
@@ -86,17 +77,4 @@ a.clear {
 
 .custom-progress__indeterminate {
   width: 100%; 
-}
-
-.custom-chip {
-  margin: 0px;
-}
-
-.custom-chip-textfield__input {
-  margin: 2px 0;
-  width: 100%;
-  border: none;
-  line-height: 32px;
-  padding: 0;
-  font-size: 13px;
 }

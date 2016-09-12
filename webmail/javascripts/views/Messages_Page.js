@@ -6,7 +6,7 @@ var View = require('../../../architecture/classes/View.js');
 
 module.exports = View.extend({
 
-  template: require('../../templates/page.html'),
+  template: require('../../templates/messages_page.html'),
 
   initialize: function () {
     var search = require('../singletons/search.js');

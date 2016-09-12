@@ -1,19 +1,14 @@
-<div class="mdl-grid" style="border-bottom: 1px solid rgba(0,0,0,.12)">
-
-  <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center">
-    <span class="mdl-layout-title custom-layout-title">
-      <a class="clear" href="/" id="title">Simpl</a>
-    </span>
-  </div>
-
-  <div class="mdl-cell mdl-cell--10-col-desktop mdl-cell--6-col-tablet mdl-cell--2-col-phone mdl-cell--middle custom-cell--center" id="search-chips"></div>
-
-  <div class="mdl-cell mdl-cell--1-col-desktop mdl-cell--1-col-tablet mdl-cell--1-col-phone mdl-cell--middle custom-cell--center">
-
-    <button class="mdl-button mdl-js-button mdl-button--icon" id="avatar">
-      <img src="<%= getImageUrl() %>" width="32px" height="32px" />
-    </button>
-
-  </div>
-
+<!-- Top row, always visible -->
+<div class="mdl-layout__header-row">
+  <!-- Title -->
+  <span class="mdl-layout__title" style="font-weight: 300">
+    <a class="clear" href="/" id="title">SimpleMail</a>
+  </span>
+  <div class="mdl-layout-spacer"></div>
+  <button class="mdl-button mdl-js-button mdl-button--icon" id="avatar">
+    <img src="<%= getImageUrl() %>" width="32px" height="32px" />
+  </button>
+</div>
+<div class="mdl-layout__header-row">
+  <div id="search" style="width: 100%;"></div>
 </div>
