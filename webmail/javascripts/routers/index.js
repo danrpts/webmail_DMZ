@@ -9,10 +9,11 @@ var Router = require('../../../architecture/classes/Router.js');
 module.exports = Router.extend({
 
   routes: {
-    '':             require('../handlers/messages.js'),
-    'messages/:id': require('../handlers/message.js'),
-    'drafts(/:id)': require('../handlers/draft.js'),
-    'login':        require('../handlers/login.js')
+    '':              require('../handlers/messages.js'),
+    'login':         require('../handlers/login.js'),
+    'messages/:id':  require('../handlers/message.js'),
+    'drafts(/:id)':  require('../handlers/draft.js'),
+    'account(/:id)': require('../handlers/account.js')
   },
 
   authenticate: function () {

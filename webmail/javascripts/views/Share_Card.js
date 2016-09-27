@@ -13,7 +13,7 @@ module.exports = View.extend({
   },
 
   defaultViews: {
-    '#share-chips': 'shareChips'
+    '#share-input': 'shareChips'
   },
 
   shareChips: function () {

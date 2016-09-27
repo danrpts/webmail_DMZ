@@ -23,15 +23,14 @@ module.exports = View.extend({
   postrender: function () {},
 
   defaultViews: {
-    'header': 'toolBar',
+    'header': 'searchBar',
     'main': 'messagesSheet',
-    'footer': 'messagesActions'
   },
 
-  toolBar: function () {
+  searchBar: function () {
     var account = require('../singletons/account.js');
-    var ToolBar = require('./Tool_Bar.js');
-    return new ToolBar({ model: account });
+    var SearchBar = require('./Search_Bar.js');
+    return new SearchBar({ model: account });
   },
 
   messagesSheet: function () {
