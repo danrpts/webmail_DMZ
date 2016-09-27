@@ -6,6 +6,8 @@ var _ = require('underscore');
 
 var View = require('../../../architecture/classes/View.js');
 
+var keycodes = require('../config/keycodes.json');
+
 var ChipsList = View.extend({
 
   template: require('../../templates/chips_list.html'),
@@ -78,8 +80,8 @@ module.exports = View.extend({
 
   onInputKeydown: function (event) {
     switch (event.which) {
-      case 13: this.onInputEnter.apply(this, arguments); break;
-      case 8: this.onInputBackspace.apply(this, arguments); break;
+      case keycodes['backspace']: this.onInputBackspace.apply(this, arguments); break;
+      case keycodes['enter']: this.onInputEnter.apply(this, arguments); break;
     }
   }
 
