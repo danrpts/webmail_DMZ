@@ -11,9 +11,9 @@ module.exports = Router.extend({
   routes: {
     '':              require('../handlers/messages.js'),
     'login':         require('../handlers/login.js'),
-    'messages/:id':  require('../handlers/message.js'),
-    'drafts(/:id)':  require('../handlers/draft.js'),
-    'account(/:id)': require('../handlers/account.js')
+    //'compose':       require('../handlers/compose.js'),
+    //'messages/:id':  require('../handlers/message.js'),
+    //'account(/:id)': require('../handlers/account.js')
   },
 
   authenticate: function () {

@@ -1,5 +1,7 @@
 'use strict';
 
+// Todo: fix the ugly promise anti-patterns in this code
+
 var $ = require('jquery');
 
 var _ = require('underscore');
@@ -38,6 +40,10 @@ module.exports = Model.extend({
 
   getImageUrl: function () {
     return this.get('image_url'); 
+  },
+
+  getFirstName: function () {
+    return this.get('name').split(' ')[0]; 
   },
 
   setUserAttributes: function (user) {
@@ -102,7 +108,7 @@ module.exports = Model.extend({
 
     var promise = $.Deferred();
 
-    //console.log('Signing out of Google...');
+    console.log('Signing out of Google...');
 
     gAuth.
 
@@ -114,7 +120,7 @@ module.exports = Model.extend({
 
       then(function () {
 
-        //console.log('...signed out.');
+        console.log('...signed out.');
 
         promise.resolve();
 

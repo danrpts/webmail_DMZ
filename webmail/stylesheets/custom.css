@@ -2,40 +2,23 @@
 * { 
   margin: 0;
   padding: 0;
-  -moz-box-sizing: border-box; 
-  -webkit-box-sizing: border-box; 
-  box-sizing: border-box; 
 }
 
 *:before, *:after {
-  box-sizing: inherit;
+  -moz-box-sizing: border-box; 
+  -webkit-box-sizing: border-box; 
+  box-sizing: border-box;
 }
 
 html, body{
-  background-color: #f7f7f7;
+  background-color: #fafafa;
   height: 100%;
   width: 100%;
   overflow: hidden;
-  letter-spacing: 0 !important;
-  font-weight: 300 !important;
-  font-size: 14px !important;
-  line-height: 18px !important;
-  font-family: "Roboto", sans-serif !important;
 }
 
 ::-webkit-scrollbar {
     width: 0px;  /* remove scrollbar space */
-}
-
-main {
-  z-index: 0;
-}
-
-footer {
-  background: white;
-  color: rgba(0,0,0,.54);
-  border-top: 1px solid rgba(0,0,0,.12);
-  z-index: 3;
 }
 
 a.clear {
@@ -44,8 +27,27 @@ a.clear {
   text-decoration: none !important;
 }
 
-.draft-input {
+li.mdl-list__item {
+  position: relative;
+}
+
+li.mdl-list__item:after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 36px;
+  top: 87px;
   width: 100%;
+  height: 1px;
+  border-bottom: 1px solid #E6E6E6;
+}
+
+
+.custom-chip {
+  margin: 0px;
+  font-size: 16px;
+  display:inline-block;
+  vertical-align:middle;
 }
 
 .custom-cell--center {
@@ -76,5 +78,51 @@ a.clear {
 }
 
 .custom-progress__indeterminate {
-  width: 100%; 
+  position: fixed;
+  z-index: 90;
+  width: 100%;
+  height: 2px;
+  top: 0px;
+  left: 0px;
+}
+
+.ui-resizable-w {
+  z-index: 80;
+  height: 100%;
+  width: .5rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: col-resize;
+}
+
+.ui-resizable-e {
+  z-index: 80;
+  height: 100%;
+  width: .5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: col-resize;
+}
+
+.labels {
+  padding-top: 16px;
+}
+
+.labels__link {
+  display: block;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+/* So that the loader will not be in a new stacking context */
+.mdl-layout__content {
+  z-index: initial;
+}
+
+.mdl-layout__container {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }

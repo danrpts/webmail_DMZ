@@ -1,5 +1,7 @@
 'use strict';
 
+var _ = require('underscore');
+
 var View = require('../../../architecture/classes/View.js');
 
 module.exports = View.extend({
@@ -13,6 +15,15 @@ module.exports = View.extend({
 
   postrender: function () {
     componentHandler.upgradeElements(this.el);
+  },
+
+  events: {
+    'click #star': 'onStarClick'
+  },
+
+  onStarClick: function () {
+    console.log('click');
+    this.model.toggle('starred');
   }
 
 });

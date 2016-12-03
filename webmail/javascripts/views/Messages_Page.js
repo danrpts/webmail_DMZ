@@ -1,5 +1,9 @@
 'use strict';
 
+var $ = require('jquery');
+
+require('jquery-ui-browserify');
+
 var _ = require('underscore');
 
 var View = require('../../../architecture/classes/View.js');
@@ -8,53 +12,144 @@ module.exports = View.extend({
 
   template: require('../../templates/messages_page.html'),
 
-  initialize: function () {
-    var search = require('../singletons/search.js');
+  postrender: function () {
 
-    // Update the collection when chips are added to the search collection.
-    this.listenTo(search, 'update', function (_, options) {
-      return this.collection.refresh(search.getValues(), options);
-    });
-  
+    // Only when there is a message to display, shall we
+    if (!! this.model) {
+      this.showMessageSheet();
+    }
+
+    componentHandler.upgradeElements(this.el);
+
   },
-
-  prerender: function () {},
-
-  postrender: function () {},
 
   defaultViews: {
-    'header': 'searchBar',
-    'main': 'messagesSheet',
+    '[data-region="drawer"]': 'newNavSheet',
+    '[data-region="content"]': 'newMessagesSheet'
   },
 
-  searchBar: function () {
+  newNavSheet: function () {
     var account = require('../singletons/account.js');
-    var SearchBar = require('./Search_Bar.js');
-    return new SearchBar({ model: account });
+    var NavSheet = require('./Nav_Sheet.js');
+    return new NavSheet({ model: account });
   },
 
-  messagesSheet: function () {
+  newMessagesSheet: function () {
+    var messages = require('../singletons/messages.js');
     var MessagesSheet = require('./Messages_Sheet.js');
-    return new MessagesSheet({ collection: this.collection });
+    return new MessagesSheet({ collection: messages });
   },
 
-  messagesActions: function () {
-    var MessagesActions = require('./Messages_Actions.js');
-    return new MessagesActions({ collection: this.collection });
+  newMessageSheet: function () {
+    var MessageSheet = require('./Message_Sheet.js');
+    return new MessageSheet({ model: this.model });
+  },
+
+  newComposeSheet: function () {
+    var ComposeSheet = require('./Compose_Sheet.js');
+    return new ComposeSheet({ model: this.model });
   },
 
   events: {
-    'click #title': 'onTitleClick'
+    'click #compose': 'onComposeClick',
+    'click [href^="/messages"]': 'onHrefMessageClick',
+    'click #close': 'onCloseSecondaryClick',
+    'click #trash': 'onTrashMessageClick'
   },
 
-  onTitleClick: function (event) {
+  hideSecondarySheet: function () {
+    var $el = this.$('.resizable');
+    $el.hide();
+  },
 
-    var search = require('../singletons/search.js');
+  showComposeSheet: function () {
+    var $el = this.$('.resizable');
+    $el.resizable({
+      handles: { 
+        w : '.ui-resizable-w'
+      }
+    });
+    this.setView(this.newComposeSheet(), '[data-region="secondary"]');
+    $el.show();
+  },
 
+  showMessageSheet: function () {
+    var $el = this.$('.resizable');
+    $el.resizable({
+      handles: { 
+        w : '.ui-resizable-w'
+      }
+    });
+    
+    this.model.unmark('unread');
+
+    this.setView(this.newMessageSheet(), '[data-region="secondary"]');
+    $el.show();
+  },
+
+  showNextMessageSheet: function () {
+    var previous = this.model;
+    var messages = require('../singletons/messages.js');
+    var index = messages.indexOf(previous);
+    if (index > -1) {
+      this.model = messages.at(index+1);
+    }
+    else {
+      this.model = messages.first();
+    }
+    this.showMessageSheet();
+    return previous;
+  },
+
+  onComposeClick: function () {
+    var GoogleMessage = require('../models/Google_Message.js');
+    this.model = new GoogleMessage();
+    this.showComposeSheet();
+  },
+
+  // Intercept href single clicks coming from the message sheet
+  onHrefMessageClick: function(event) {
     event.preventDefault();
+    event.stopPropagation();
+    var href = $(event.currentTarget).attr('href')
+    var fragment = href.replace(/^\//, '').replace('\#\!\/', '');
+    var id = fragment.replace('messages\/', '');
+    var messages = require('../singletons/messages.js');
+    this.model = messages.lookup(id);
+    this.showMessageSheet();
+    //window.transition.to(fragment, { trigger: false });
+    return false;
+  },
 
-    this.collection.refresh(search.getValues());
+  // Notice how we handle the secondary close event within context of the messages page
+  onCloseSecondaryClick: function () {
 
+    // So that we can do view composition here,
+    this.model = undefined;
+
+    // Update the url (do not navigate)
+    //window.transition.to('', { trigger: false });
+
+    // And simply hide the secondary sheet instead of re-redering the whole page
+    this.hideSecondarySheet();
+
+    // Allow propogation
+    return true;
+  },
+
+  onTrashMessageClick: function () {
+
+    // Immediately show the next message
+    var previous = this.showNextMessageSheet();
+
+    // Update the url (do not navigate)
+    window.transition.to('', { trigger: false });
+
+    // Then trash the previous model
+    previous.trash();
+
+    // Allow propogation
+    return true;
   }
 
 });

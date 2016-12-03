@@ -8,6 +8,7 @@ var View = require('../../../architecture/classes/View.js');
 
 var keycodes = require('../config/keycodes.json');
 
+// Notice ChipsList is a private child view
 var ChipsList = View.extend({
 
   template: require('../../templates/chips_list.html'),
@@ -15,8 +16,6 @@ var ChipsList = View.extend({
   initialize: function () {
     this.listenTo(this.collection, 'update', this.render);
   },
-
-  prerender: function () {},
 
   postrender: function () {
     componentHandler.upgradeElements(this.el);
@@ -27,7 +26,6 @@ var ChipsList = View.extend({
   },
 
   onDeleteClick: function (event) {
-    console.log(event);
     var cid = event.currentTarget.id;
     this.collection.remove(cid);
   }
@@ -36,26 +34,22 @@ var ChipsList = View.extend({
 
 module.exports = View.extend({
 
-  //template: override this in further extension
-
-  initialize: function () {},
-
-  prerender: function () {},
+  template: require('../../templates/chips_input.html'),
 
   postrender: function () {
     componentHandler.upgradeElements(this.el);
   },
 
   defaultViews: {
-    '#chip-list': 'listView'
+    '#chips-list': 'newChipsList'
   },
   
-  listView: function () {
+  newChipsList: function () {
     return new ChipsList({ collection: this.collection });
   },
 
   events: {
-    'keydown #chip-input': 'onInputKeydown'
+    'keydown #chips-input': 'onInputKeydown'
   },
 
   // Todo: fetch data list items and find select event

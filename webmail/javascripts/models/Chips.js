@@ -6,6 +6,7 @@ var Model = require('../../../architecture/classes/Model.js');
 
 var Collection = require('../../../architecture/classes/Collection.js');
 
+// Notice Chip is a private model
 var Chip = Model.extend({
 
   defaults: {

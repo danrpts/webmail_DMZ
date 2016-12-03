@@ -13,3 +13,7 @@
 [ ] need to refresh gauth token
 [ ] infinite scrolling
 [ ] pull up to refresh
+[ ] gulp task that parses file for //TODO: text and appends to this file
+[ ] view arch looks for data-region and calls function on view
+[ ] signletons add themselves to resources hash
+[ ] clean up promise anti-patterns; network calls should only be used promises unless unavoidable; otherwise callbacks
