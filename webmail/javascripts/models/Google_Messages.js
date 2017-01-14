@@ -31,6 +31,8 @@ module.exports = Collection.extend({
         xhr.setRequestHeader('Authorization', 'Bearer ' + account.get('token'));
       },
       success: function (result) {
+
+        // Just store the token directly on the collection
         collection._nextPageToken = result.nextPageToken;
         deferred.resolveWith(collection, [result.messages]);
       }
@@ -119,8 +121,8 @@ module.exports = Collection.extend({
           /* Invarient: Prefetch, deferred and promise are resolved */
 
           // Trigger the batch sync event once all are resolved
-          collection.trigger('batch:sync', collection, deferred, options);   
-
+          collection.trigger('batch:sync', collection, deferred, options);
+          
         }
 
         // Fetch the messages and pipe the deferred state
@@ -197,14 +199,23 @@ module.exports = Collection.extend({
     // Local collection filtering
   filter: function (pattern, options) {
 
-    // TODO: Implement collection filtering for pattern
+    // Need to store the original collection somewhere
+    // and then only filter this whenever filter is called and update the view
+
+    var results = Collection.prototype.filter.call(this, function (model) {
+      return model.getSnippet().search(pattern) > -1;
+    });
+
+    //this.reset(results);
 
   },
 
   // Remote collection fetching
   search: function (queries, options) {
-    
+
     //console.log('2: search called');
+
+    queries = queries || [];
 
     options = options || {};
 
@@ -216,13 +227,12 @@ module.exports = Collection.extend({
   
   },
 
-  refresh: function (queries, options) {
+  refresh: function (options) {
     
     //console.log('1: refresh called');
 
-    // Todo: This should enforce the previous query
-
-    return this.search.apply(this, arguments);
+    // Refresh the list w/ contents of the the queries collection.
+    return this.search(this._queries, options);
   
   },
 
@@ -230,9 +240,7 @@ module.exports = Collection.extend({
     return (!! this._nextPageToken);
   },
 
-  more: function (nextPageToken, options) {
-
-    nextPageToken = nextPageToken || this._nextPageToken;
+  more: function (callback, options) {
 
     options = options || {};
 
@@ -240,12 +248,12 @@ module.exports = Collection.extend({
     // and then "remove: false" tells set to not remove any stale models. Essentially,
     // this works implictly as a collection.push, but with our existing fetch method.
     _.extend(options, {
-      data: $.param({ pageToken: nextPageToken }),
+      data: $.param({ pageToken: this._nextPageToken }),
       reset: false,
       remove: false
     });
 
-    return this.fetch(options);
+    return this.fetch(options).then(callback);
 
   },
 

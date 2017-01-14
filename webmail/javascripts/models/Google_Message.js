@@ -8,6 +8,74 @@ var humanTime = require('human-time');
 
 var Checkbox = require('./Checkbox.js')
 
+/* Private Helpers */
+//...
+
+
+function base64decode (encoded) {
+
+  var decoded = encoded
+
+  // Google's encoding slightly differs
+  .replace(/-/g, '+') // 62nd char of encoding
+  .replace(/_/g, '/'); // 63rd char of encoding
+
+  return window.atob(decoded); 
+
+}
+
+function extract (payload) {
+  
+  var mimeType = payload.mimeType;
+
+  if (mimeType === 'multipart/alternative') {
+
+    // Extract the richest format
+
+    var richest = _.last(payload.parts);
+
+    return extract(richest);
+
+  }
+
+  else if (mimeType.match(/multipart\/w*/)) {
+
+    //console.log(mimeType);
+
+    // multipart/mixed, multipart/digest, multipart/related, any non-spec multipart
+
+    // Extract all parts and combine serially
+
+    // Todo: combine by partId
+    return _.reduce(payload.parts, function (body, part) {
+
+      //console.log(part);
+
+      return body += extract(part);
+
+    }, '', this);
+
+  }
+
+  else if (mimeType.match(/text\/w*/)) {
+
+    // text/*
+    return base64decode(payload.body.data);
+
+  }
+
+  else if (mimeType === 'message/rfc822') {
+
+    return base64decode(payload.body.data);
+
+  }
+
+  return 'Unsupported Mime Type';
+
+}
+
+/* Public Ctor */
+
 module.exports = Checkbox.extend({
 
   urlRoot: 'https://www.googleapis.com/gmail/v1/users/me/messages',
@@ -54,6 +122,7 @@ module.exports = Checkbox.extend({
     }
 
     Checkbox.prototype.destroy.call(this, options);
+  
   },
 
   // POST / PUT
@@ -62,8 +131,6 @@ module.exports = Checkbox.extend({
     var account = require('../singletons/account.js');
     
     options = options || {};
-
-    console.log(options);
 
     var beforeSend = options.beforeSend;
     options.beforeSend = function (xhr) {
@@ -95,88 +162,8 @@ module.exports = Checkbox.extend({
 
   /* "High Level" message procedures */
 
-  // Higher level POST operation
-  trash: function () {
-
-    var messages = require('../singletons/messages.js');
-
-    // Immediately remove for perceived performance
-    messages.remove(this);
-
-    // Then invoke the remote procedure
-    this.procedure('trash', {
-
-      // Set the attrs option to prevent backbone from serializing the entire model
-      attrs: {}
-
-    });
-
-    // If error add back to collection and handle error
-  
-  },
-
   // Higher level POST/PUT operation
   save: function () {
-
-  },
-
-  mark: function (label) {
-
-    var index = this.hasLabel(label);
-
-    // The model doesn't already have the label
-    if (index === -1) {
-
-      this.procedure('modify', {
-
-        // Set the attrs option to prevent backbone from serializing the entire model
-        attrs: {
-
-          'addLabelIds': [ label.toUpperCase() ]
-
-        },
-
-        success: function (model, response) {
-
-          // Merge the result into model
-          model.set(response);
-
-        }
-
-      });
-
-
-    }
-
-  },
-
-  unmark: function (label) {
-
-    var index = this.hasLabel(label);
-
-    // The model has the label
-    if (index > -1) {
-
-      this.procedure('modify', {
-
-        // Set the attrs option to prevent backbone from serializing the entire model
-        attrs: {
-
-          'removeLabelIds': [ label.toUpperCase() ]
-
-        },
-
-        success: function (model, response) {
-
-          // Merge the result into model
-          model.set(response);
-
-        }
-
-      });
-
-
-    }
 
   },
 
@@ -229,11 +216,106 @@ module.exports = Checkbox.extend({
   
   },
 
-  /* "High Level" message procedures */
+  // Higher level POST operation
+  untag: function (name, options) {
 
-  // Todo: Keep marked as unread (unprocesses), goto next message
-  // Higher level NOOP operation
-  ignore: function () {},
+    var index = this.hasTag(name);
+
+    // If the message has the tag
+    if (index > -1) {
+
+      this.procedure('modify', {
+
+        // Set the attrs option to prevent backbone from serializing the entire model
+        attrs: {
+
+          'removeLabelIds': [ name.toUpperCase() ]
+
+        },
+
+        success: function (model, response) {
+
+          // Merge the result and make the change loud
+          model.set(response, options);
+
+        }
+
+      });
+
+
+    }
+
+  },
+
+  // Higher level POST operation
+  tag: function (name, options) {
+
+    var index = this.hasTag(name);
+
+    // If the message doesn't have the tag
+    if (index === -1) {
+
+      this.procedure('modify', {
+
+        // Make the request silent to avoid jitter
+        silent: true,
+
+        // Set the attrs option to prevent backbone from serializing the entire model
+        attrs: {
+
+          'addLabelIds': [ name.toUpperCase() ]
+
+        },
+
+        success: function (model, response) {
+
+          // Merge the result
+          model.set(response, options);
+
+        }
+
+      });
+
+
+    }
+
+  },
+
+  // Higher level POST operation
+  trash: function () {
+
+    var messages = require('../singletons/messages.js');
+
+    // Immediately remove for perceived performance
+    messages.remove(this);
+
+    // Then invoke the remote procedure
+    this.procedure('trash', {
+
+      // Set the attrs option to prevent backbone from serializing the entire model
+      attrs: {}
+
+    });
+
+    // If error add back to collection and handle error
+  
+  },
+
+  toggleStarred: function (options) {
+
+    if (this.isStarred()) this.untag('starred', options);
+    
+    else this.tag('starred', options);
+  
+  },
+
+  toggleImportant: function (options) {
+  
+    if (this.isImportant()) this.untag('important', options);
+  
+    else this.tag('important', options);
+  
+  },
 
   // Todo: Open dialog to send to someone else, goto next message
   // Higher level POST operation
@@ -243,29 +325,22 @@ module.exports = Checkbox.extend({
   // Higher level POST operation
   respond: function () {},
 
-
   /* Payload helpers */
-
-  // Check message for google type label
-  hasLabel: function (label) {
-
-    var labels = this.get('labelIds');
-
-    var index = labels.indexOf(label.toUpperCase());
-
-    // Returns the index -1 or false;
-    // Todo: clean up reutrn value
-    return !! labels &&  index;
-
-  },
 
   // Extract headers from message payload
   getHeaders: function () {
 
     var payload = this.get('payload');
 
-    // Cache the result
-    return !! payload && _.memoize(function () {
+    // TODO: Handle error
+    if (! payload) {
+      
+      return -1;
+
+    }
+
+    // Memoize to cache the result
+    return _.memoize(function () {
 
       var names = _.pluck(payload.headers, 'name');
 
@@ -277,92 +352,156 @@ module.exports = Checkbox.extend({
 
   },
 
-  // Extract body from message headers
-  // Todo: Needs work or rewrite, does not handle all message body types
   getBody: function () {
-
-    function recursePayload (payload) {
-
-      // Return the encoded body
-      return (payload.body.size > 0) 
-
-      // Body is easy to get
-      ? payload.body.data
-
-      // Otherwise we have to get it by parts
-      : _.reduce(payload.parts, function (memo, part) {
-        
-        return memo || recursePayload(part);
-
-      }, undefined);
-
-    }
 
     var payload = this.get('payload');
 
-    // Cache the result
-    return !! payload && _.memoize(function () {
+    var body = extract(payload)
 
-      var body = recursePayload(payload).
+    // Remove any scripts
+    .replace(/<script([\S\s]*?)>([\S\s]*?)<\/script>/ig, '')
 
-      replace(/-/g, '+').
+    // Remove any styles
+    .replace(/<style([\S\s]*?)>([\S\s]*?)<\/style>/ig, '');
 
-      replace(/_/g, '/').
-      
-      replace(/\s/g, '');
+    return body;
 
-      return window.atob(body);
-
-    })();
-
-  },
-
-  isUnread: function () {
-  
-    return this.hasLabel('unread') > -1;
-  
-  },
-
-  isStarred: function () {
-  
-    return this.hasLabel('starred') > -1;
-  
   },
 
   hasParts: function () {
+
     var payload = this.get('payload');
+
+    // TODO: Handle error
+    if ( ! payload ) {
+
+      return -1;
+
+    }
+    
     return !! payload.mimeType.match(/multipart/g);
+  
   },
 
   hasAttachment: function () {
   
     var payload = this.get('payload');
 
-    return this.hasParts() && _.find(payload.parts, function (part) {
+    // TODO: Handle error
+    // Even though hasParts checks this we still should stratify the cases
+    if ( ! payload ) {
 
-      return part.body.attachmentId
+      return -1;
+
+    }
+
+    // Short circut
+    if ( ! this.hasParts() ) {
+      
+      return false;
+
+    }
+
+    //
+    return _.find(payload.parts, function (part) {
+
+      return part.body.attachmentId;
     
     }, false);
 
   },
 
-  isHtml: function () {
-
-    var payload = this.get('payload');
-    
-    return (payload.mimeType === 'text/html');
-
-  },
-
   getHeader: function (name) {
-    
+
     var header = this.getHeaders()[name];
 
-    return ! header ? '(No ' + name + ')' : header.replace(/['"]+/g, '');
+    // TODO: Handle error
+    if (! header) {
+
+      return -1;
+
+    }
+
+    return header.replace(/['"]+/g, '');
 
   },
 
+
   /* Attribute helpers */
+
+  // Tags are implemented with google label system
+  hasTag: function (name) {
+
+    var labels = this.get('labelIds');
+
+    // TODO: Handle error
+    if ( ! labels ) {
+
+      return -1;
+
+    }
+
+    // Returns -1 if it fails
+    return labels.indexOf(name.toUpperCase());
+
+  },
+
+  // Just a wrapper for templates
+  isUnread: function () {
+  
+    return this.hasTag('unread') > -1;
+  
+  },
+
+  // Just a wrapper for templates
+  isStarred: function () {
+  
+    return this.hasTag('starred') > -1;
+  
+  },
+
+  // Just a wrapper for templates
+  isImportant: function () {
+  
+    return this.hasTag('important') > -1;
+  
+  },
+
+  // Just a wrapper for templates
+  isSnoozed: function () {
+  
+    return this.hasTag('snoozed') > -1;
+  
+  },
+
+  // Just a wrapper for templates
+  // TODO
+  isFlagged: function () {
+  
+    return false;
+  
+  },
+
+  // Just a wrapper for templates
+  isSent: function () {
+  
+    return this.hasTag('sent') > -1;
+  
+  },
+
+  // Just a wrapper for templates
+  isDraft: function () {
+  
+    return this.hasTag('draft') > -1;
+  
+  },
+
+  // Just a wrapper for templates
+  isTrash: function () {
+  
+    return this.hasTag('trash') > -1;
+  
+  },
 
   getDate: function () {
   
@@ -380,12 +519,14 @@ module.exports = Checkbox.extend({
   
   },
 
+  // Just a wrapper for templates
   getTimeAgo: function () {
 
     return humanTime(new Date(this.getDate()));
   
   },
 
+  // Just a wrapper for templates
   getSubject: function () {
   
     return this.fault('subject', function () {
@@ -396,12 +537,13 @@ module.exports = Checkbox.extend({
 
   },
 
-  getFrom: function () {
+  // Just a wrapper for templates
+  _getFrom: function () {
 
     return this.fault('from', function () {
 
       // Set default
-      var name = '(No From)';
+      var name = undefined;
       var email = this.getHeader('From');
 
       // Extract email and name
@@ -427,6 +569,29 @@ module.exports = Checkbox.extend({
 
   },
 
+  getFrom: function () {
+
+    var from = this._getFrom();
+    
+    var name = from[0];
+    
+    return !! name ? name : from[1]; 
+  
+  },
+
+  getFromList: function () {
+
+  },
+
+  getReply: function () {
+
+  },
+
+  getReplyList: function () {
+
+  },
+
+  // Just a wrapper for templates
   getTo: function () {
 
     return this.fault('to', function () {
@@ -450,6 +615,11 @@ module.exports = Checkbox.extend({
 
   },
 
+  getToList: function () {
+
+  },
+
+  // Just a wrapper for templates
   getSnippet: function () {
     
     return this.get('snippet');

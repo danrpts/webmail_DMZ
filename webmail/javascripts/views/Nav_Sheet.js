@@ -11,12 +11,12 @@ module.exports = View.extend({
   template: require('../../templates/nav_sheet.html'),
 
   events: {
-    'click #avatar': 'onAvatarClick',
-    'click .label': 'onLabelClick'
+    'click #signout': 'onSignoutClick',
+    'click .labels__link': 'onLabelClick'
   },
 
   // Temporary way to signout and clear global messages
-  onAvatarClick: function () {
+  onSignoutClick: function () {
     var messages = require('../singletons/messages.js');
 
     // Todo: clean up promise anti-pattern and use a callback directly
@@ -29,13 +29,13 @@ module.exports = View.extend({
   // When a navigation link is clicked
   onLabelClick: function (event) {
 
-    var messages = require('../singletons/messages.js');
+    var queries = require('../singletons/queries.js');
 
     // Grab the label
     var label = $(event.currentTarget).text().trim().toLowerCase();
-    
-    // And trasparently run a search query (unlike the chips style of searching)
-    messages.search([ 'in:' + label ]);
+
+    // Implicitly search by modifying the queries collection and the events will handle the rest
+    queries.reset({ 'value' : 'in:' + label });
 
   }
 

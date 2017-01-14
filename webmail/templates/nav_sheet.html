@@ -10,24 +10,43 @@
          style="padding: 0 16px;
                 border-bottom: 1px solid #e0e0e0;">
 
-
-        <div style="flex: 1; text-align: left;">
-          <button class="mdl-button mdl-js-button mdl-button--icon" id="avatar">
+        <button class="mdl-button mdl-js-button" 
+                id="avatar"
+                style="width: 100%;
+                      padding: 2px;">
+          <span class="mdl-button--icon" style="display: inline-block; float: left; border-radius: 2px;">
             <img src="<%= getImageUrl() %>" width="32px" height="32px" />
-          </button>
-        </div>
-
-        <div style="flex: 2; text-align: center;">
+          </span>
           <span class="mdl-layout-title"
                 style="font-size: 16px;
-                       color: rgba(0,0,0,.54);">
-                Hello, <%= getFirstName() %>
+                       color: rgba(0,0,0,.54);
+                       text-transform: initial;
+                       display: inline-block;
+                       letter-spacing: 1px;
+                       font-weight: 400;">
+                  Hello, <%= getFirstName() %>
           </span>
-        </div>
 
-        <div style="flex: 1; text-align: right;">
-          <!-- Placeholder -->
-        </div>
+        </button>
+
+        <ul class="mdl-menu 
+                   mdl-menu--bottom-left
+                   mdl-js-menu
+                   mdl-js-ripple-effect"
+            for="avatar">
+          <li class="mdl-menu__item"
+              style="color: rgba(0,0,0,.64);"
+              id="signout">
+            <span style="float: left;
+                         text-align: left;">
+              <i class="fa fa-hand-peace-o"
+                 style="text-align: center;
+                        width: 14px;
+                        font-size: 14px;"></i>
+            </span>
+            &nbsp;&nbsp;Sign Out...
+          </li>
+        </ul>
 
     </div>
 
@@ -35,7 +54,7 @@
 
   <main class="mdl-layout__content
                mdl-color-text--grey-600"
-        style="padding: 16px 32px;">
+        style="padding: 8px 16px;">
 
       <div style="padding: 16px 0;">
         <button class="mdl-button mdl-js-button
@@ -47,37 +66,81 @@
       </div>
 
       <div class="labels">
-        <span style="display: block;">Mailboxes</span>
-        <span class="label labels__link">Inbox</span>
-        <span class="label labels__link">Starred</span>
-        <span class="label labels__link">Sent</span>
-        <span class="label labels__link">Drafts</span>
-        <span class="label labels__link">Trash</span>
+        <span class="label
+                     labels__header">Folders</span>
+
+        <span class="label
+                     labels__link">
+          <i class="fa fa-inbox mdl-color-text--grey" aria-hidden="true"></i>&nbsp;&nbsp;Inbox
+        </span>
+        <span class="label
+                     labels__link">
+          <i class="fa fa-star-o mdl-color-text--grey" aria-hidden="true"></i>&nbsp;&nbsp;Starred
+        </span>
+        <span class="label
+                     labels__link">
+          <i class="fa fa-bookmark-o mdl-color-text--grey" aria-hidden="true"></i>&nbsp;&nbsp;Important
+        </span>
+        <span class="label
+                     labels__link">
+          <i class="fa fa-send-o mdl-color-text--grey" aria-hidden="true"></i>&nbsp;&nbsp;Sent
+        </span>
+        <span class="label
+                     labels__link">
+          <i class="fa fa-sticky-note-o mdl-color-text--grey" aria-hidden="true"></i>&nbsp;&nbsp;Drafts
+        </span>
+        <span class="label
+                     labels__link">
+          <i class="fa fa-trash-o mdl-color-text--grey" aria-hidden="true"></i>&nbsp;&nbsp;Trash
+        </span>
       </div>
 
       <div class="labels">
-        <span style="display: block;">Labels</span>
-        <span class="labels__link">
-          <i class="fa fa-circle-thin mdl-color-text--orange-300" aria-hidden="true"></i>&nbsp;Snoozed
+        <span class="label
+                     labels__header">Tags</span>
+        <span class="label
+                     labels__link">
+          <i class="fa fa-circle-thin mdl-color-text--red-300" aria-hidden="true"></i>
+          Red
         </span>
-        <span class="labels__link">
-          <i class="fa fa-circle-thin mdl-color-text--green-300" aria-hidden="true"></i>&nbsp;Forwarded
+        <span class="label
+                     labels__link">
+          <i class="fa fa-circle-thin mdl-color-text--orange-300" aria-hidden="true"></i>
+          Orange
         </span>
-        <span class="labels__link">
-          <i class="fa fa-circle-thin mdl-color-text--blue-300" aria-hidden="true"></i>&nbsp;Replied
+        <span class="label
+                     labels__link">
+          <i class="fa fa-circle-thin mdl-color-text--yellow-300" aria-hidden="true"></i>
+          Yellow
         </span>
-        <span class="labels__link">
-          <i class="fa fa-circle-thin mdl-color-text--purple-300" aria-hidden="true"></i>&nbsp;Archived
+        <span class="label
+                     labels__link">
+          <i class="fa fa-circle-thin mdl-color-text--green-300" aria-hidden="true"></i>
+          Green
+        </span>
+        <span class="label
+                     labels__link">
+          <i class="fa fa-circle-thin mdl-color-text--blue-300" aria-hidden="true"></i>
+          Blue
+        </span>
+        <span class="label
+                     labels__link">
+          <i class="fa fa-circle-thin mdl-color-text--purple-300" aria-hidden="true"></i>
+          Purple
         </span>
       </div>
+
 
   </main>
 
   <footer class="mdl-color-text--grey-600"
           style="padding: 4px;">
-    <button class="mdl-button mdl-js-button mdl-button--icon" style="float: right;">
-      <i class="material-icons" style="font-size: 14px;">settings</i>
-    </button>
+    <span style="line-height: 32px; width: 100%;">
+      <button class="mdl-button mdl-js-button mdl-button--icon"
+              style="float: right;">
+        <i class="material-icons" style="font-size: 14px;">settings</i>
+      </button>
+    </span>
   </footer>
 
 </div>

@@ -10,6 +10,10 @@ module.exports = View.extend({
 
   template: require('../../templates/compose_sheet.html'),
 
+  postrender: function () {
+    componentHandler.upgradeElements(this.el);
+  },
+
   defaultViews: {
     '[data-region="to-input"]': 'newToInput'
   },

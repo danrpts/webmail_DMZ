@@ -12,9 +12,9 @@ module.exports = Model.extend({
     'checked': false,
   },
 
-  toggleChecked: function () {
+  toggleChecked: function (options) {
     var value = ! this.get('checked');
-    this.set({ checked: value });
+    this.set({ checked: value }, options);
     return value;
   },
 

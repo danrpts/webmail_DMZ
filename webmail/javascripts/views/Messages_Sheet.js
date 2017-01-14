@@ -4,8 +4,6 @@ var $ = require('jquery');
 
 var _ = require('underscore');
 
-var keycodes = require('../config/keycodes.json');
-
 var View = require('../../../architecture/classes/View.js');
 
 module.exports = View.extend({
@@ -14,12 +12,13 @@ module.exports = View.extend({
 
   initialize: function () {
 
-    var search = require('../singletons/search.js');
+    var queries = require('../singletons/queries.js');
 
-    // Update the collection when chips are added to the search collection.
-    this.listenTo(search, 'update', function (_, options) {
+    // Update the collection when chips are added to the queries collection.
+    // Is this a good place?
+    this.listenTo(queries, 'reset update', function (_, options) {
 
-      return this.collection.refresh(search.getValues(), options);
+      return this.collection.search(queries.getValues(), options);
     
     });
   
@@ -30,38 +29,55 @@ module.exports = View.extend({
   },
 
   defaultViews: {
+    '[data-region="feature"]': 'newSearchInput',
     '[data-region="list"]': 'newMessagesList'
   },
 
-  newMessagesList: function () {
+  newSearchInput: function () {
+    var queries = require('../singletons/queries.js')
+    var SearchInput = require('./Search_Input.js');
+    return new SearchInput({ collection: queries });  
+  },
 
+  newFilterInput: function () {
+    var FilterInput = require('./Filter_Input.js');
+    return new FilterInput();  
+  },
+
+  newMessagesList: function (collection) {
     var MessagesList = require('./Messages_List.js');
-  
-    return new MessagesList({ collection: this.collection });
-  
+    return new MessagesList({ collection: collection || this.collection });
   },
 
   events: {
-    'click #refresh': 'onRefreshClick',
-    'keyup #search': 'onSearchKeyup'
+    'click #filter-toggle': 'onFilterToggleClick',
+    'input #filter-textarea': 'onFilterTextareaInput',
+    'click #refresh': 'onRefreshClick'
+  },
+
+  onFilterToggleClick: function () {
+      
+    // Using DOM state for simplicity
+    var bool = this.$('#filter-toggle').hasClass('is-checked');
+
+    // Default
+    var feature = this.newFilterInput();
+    
+    // Change when filter feautre is displayed
+    if (bool) feature = this.newSearchInput();
+
+    // Set in the feature region
+    this.setView(feature, '[data-region="feature"]');
+
+  },
+
+  onFilterTextareaInput: function (e) {
+    var value = $(e.currentTarget).val();
+    this.collection.filter(value);
   },
 
   onRefreshClick: function () {
-
-    // Todo: the refresh function should enforce previous query; not this handler
-    var $el = $('#search');
-    var query = $el.val().trim() || 'in:inbox';
-    this.collection.refresh([ query ]);
-  },
-
-  onSearchKeyup: function (event) {
-
-    var $el = $(event.currentTarget);
-    
-    var query = $el.val().trim();
-  
-    if (keycodes['enter'] === event.which) this.collection.search([ query ]);
-  
+    this.collection.refresh();
   }
 
 });

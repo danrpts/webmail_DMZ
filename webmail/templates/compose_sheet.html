@@ -12,7 +12,165 @@
            style="padding: 0 16px;
                   border-bottom: 1px solid #e0e0e0;">
 
-        <div style="flex: 1; text-align: left;">
+        <button class="mdl-button
+                       mdl-js-button
+                       mdl-button--icon"
+                id="tag">
+            <i class="fa fa-circle-thin material-icons mdl-color-text--grey-300"
+             aria-hidden="true"
+             style="font-size: 14px;"></i>
+        </button>
+
+        <ul class="mdl-menu 
+                   mdl-menu--bottom-left
+                   mdl-js-menu"
+            for="tag">
+          <li class="mdl-menu__item"
+              id="star"
+              style="color: rgba(0,0,0,.64);">
+            <% if ( isStarred() ) { %>
+             <i class="fa fa-star
+                       mdl-color-text--amber-300"
+                aria-hidden="true"></i>
+            <% } else { %>
+             <i class="fa fa-star-o
+                       mdl-color-text--grey"
+                aria-hidden="true"></i>
+            <% } %>
+            &nbsp;&nbsp;Star
+          </li>
+          <li class="mdl-menu__item
+                     mdl-menu__item--full-bleed-divider"
+              id="important"
+              style="color: rgba(0,0,0,.64);">
+            <% if ( isImportant() ) { %>
+             <i class="fa fa-bookmark mdl-color-text--indigo-300"
+                aria-hidden="true"></i>
+            <% } else { %>
+             <i class="fa fa-bookmark-o
+                      mdl-color-text--grey"
+                aria-hidden="true""></i>
+            <% } %>
+            &nbsp;&nbsp;Important
+          </li>
+          <li class="mdl-menu__item"
+              style="color: rgba(0,0,0,.64);">
+            <i class="fa fa-circle-thin
+                      mdl-color-text--grey-300"
+               aria-hidden="true"></i>
+            &nbsp;&nbsp;Auto
+          </li>
+        </ul>
+
+        <div style="flex: 1; 
+                    text-align: left;
+                    min-width: 0;">
+          <span class="mdl-layout-title">
+
+            <div class="mdl-textfield"
+                 style="height: 32px;
+                        padding: 0;">
+              <input class="mdl-textfield__input"
+                     type="text"
+                     id="subject"
+                     style="font-size: 14px;
+                            font-weight: 400;
+                            letter-spacing: 0;
+                            line-height: 24px;
+                            color: rgba(0,0,0,.54);
+                            border: none;
+                            outline: none;
+                            width: initial;
+                            height: 32px;
+                            padding: 0 4px 0 12px;
+                            color: rgba(0,0,0,.54);"
+                     placeholder="Untitled">
+            </div>
+          </span>
+        </div>
+
+        <div style="text-align: right;">
+          <button class="mdl-button
+                         mdl-js-button
+                         mdl-button--icon"
+                  id="format">
+            <i class="material-icons">text_format</i>
+          </button>
+          <button class="mdl-button
+                         mdl-js-button
+                         mdl-button--icon"
+                  id="attach">
+            <i class="material-icons">attach_file</i>
+          </button>
+          <button id="actions"
+                  class="mdl-button
+                         mdl-js-button
+                         mdl-button--icon">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu 
+                     mdl-menu--bottom-right
+                     mdl-js-menu
+                     mdl-js-ripple-effect"
+              for="actions">
+            <li class="mdl-menu__item"
+                style="color: rgba(0,0,0,.64);">
+              <span style="float: left; text-align: left;">
+                <i class="fa fa-send"
+                   style="text-align: center; width: 14px; font-size: 14px;"></i>
+              </span>
+              &nbsp;&nbsp;Send
+            </li>
+            <li class="mdl-menu__item
+                       mdl-menu__item--full-bleed-divider"
+                style="color: rgba(0,0,0,.64);">
+              <span style="float: left; text-align: left;">
+                <i class="material-icons"
+                   style="font-size: 14px;
+                          line-height: inherit;">save</i>
+              </span>
+              &nbsp;&nbsp;Draft
+            </li>          
+            <li class="mdl-menu__item
+                       mdl-menu__item--full-bleed-divider"
+                style="color: rgba(0,0,0,.64);">
+              <span style="float: left; text-align: left;">
+                <i class="fa fa-trash-o"
+                   style="text-align: center; width: 14px; font-size: 14px;"></i>
+              </span>
+              &nbsp;&nbsp;Delete
+            </li>
+            <li class="mdl-menu__item"
+                style="color: rgba(0,0,0,.64);">
+              Print... <span style="float: right; text-align: right;">&#8984;P</span>
+            </li>
+            <li class="mdl-menu__item"
+                style="color: rgba(0,0,0,.64);">
+              Download <span style="float: right; text-align: right;">&#8984;S</span>
+            </li>
+            <li class="mdl-menu__item"
+                style="color: rgba(0,0,0,.64);">
+                Fullscreen <span style="float: right; text-align: right;">&#8984;F</span>
+            </li>
+            <li class="mdl-menu__item"
+                style="color: rgba(0,0,0,.64);">
+                Window <span style="float: right; text-align: right;">&#8984;N</span>
+            </li>
+            <li class="mdl-menu__item
+                       mdl-menu__item--full-bleed-divider"
+                style="color: rgba(0,0,0,.64);">
+              Close <span style="float: right; text-align: right;">Esc</span>
+            </li>
+            <li class="mdl-menu__item"
+                style="color: rgba(0,0,0,.64);">
+              <span style="float: left; text-align: left;">
+                <i class="material-icons"
+                   style="font-size: 14px;
+                          line-height: inherit;">info_outline</i>
+              </span>
+              &nbsp;&nbsp;Details
+            </li>
+          </ul>
           <button class="mdl-button
                          mdl-js-button
                          mdl-button--icon"
@@ -21,43 +179,6 @@
           </button>
         </div>
 
-        <div style="flex: 1; text-align: center;">
-          <span class="mdl-layout-title"
-                style="padding: 16px;
-                       font-size: 16px;
-                       color: rgba(0,0,0,.54);">
-                Compose
-          </span>
-        </div>
-
-        <div style="flex: 1; text-align: right;">
-          <button class="mdl-button
-                         mdl-js-button
-                         mdl-button--icon"
-                  id="open">
-            <i class="material-icons">open_in_new</i>
-          </button>
-        </div>
-
-      </div>
-
-      <div class="mdl-layout__header-row"
-           style="padding: 0 16px;
-                  border-bottom: 1px solid #e0e0e0;"
-           data-region="to-input">
-
-           <span style="padding-right: 4px;
-                        font-size: 14px;
-                        font-weight: 400;
-                        letter-spacing: 0;
-                        line-height: 24px;
-                        height: 24px;
-                        color: rgba(0,0,0,.54);">
-              To:
-            </span>
-
-           <!-- To input injeted here -->
-        
       </div>
 
       <div class="mdl-layout__header-row"
@@ -69,27 +190,23 @@
                         font-weight: 400;
                         letter-spacing: 0;
                         line-height: 24px;
-                        color: rgba(0,0,0,.54);
-                        height: 24px;">
-              Subject:
+                        height: 24px;
+                        color: rgba(0,0,0,.54);">
+              To:
             </span>
 
-        <div class="mdl-textfield"
-             style="height: 32px;
-                    padding: 0;">
+            <div data-region="to-input"><!-- To input injeted here --></div>
 
-          <input class="mdl-textfield__input"
-                 type="text"
-                 id="subject"
-                 style="border: none;
-                        outline: none;
-                        width: initial;
-                        height: 32px;
-                        padding: 0 4px 0 12px;
+           <span style="padding-right: 4px;
+                        font-size: 14px;
+                        font-weight: 400;
+                        letter-spacing: 0;
+                        line-height: 24px;
+                        height: 24px;
                         color: rgba(0,0,0,.54);">
-
-        </div>
-
+              Cc Bcc
+            </span>
+        
       </div>
 
     </header>
@@ -99,37 +216,18 @@
                  mdl-color-text--grey-600"
           style="padding: 16px;">
 
-      <div class="mdl-textfield mdl-js-textfield" style="width: 100%;">
-        <textarea class="mdl-textfield__input" type="text" rows= "3" id="body"
+      <div class="mdl-textfield mdl-js-textfield"
+           style="display: flex;
+                  flex-direction: column;">
+        <textarea class="mdl-textfield__input"
+                  type="text"
+                  id="body"
                   style="outline: none;
-                         color: rgba(0,0,0,.54);"></textarea>
+                         color: rgba(0,0,0,.64);
+                         width: 100%;
+                         height: 100%;
+                         padding: 0;"></textarea>
       </div>
-
-      <footer>
-
-        <div class="mdl-layout__header-row" style="padding: 0 16px;">
-
-          <div style="flex: 1; text-align: center;">
-            <button class="mdl-button
-                           mdl-js-button
-                           mdl-button--colored"
-                    id="save">
-              Save
-            </button>
-          </div>
-
-          <div style="flex: 1; text-align: center;">
-            <button class="mdl-button
-                           mdl-js-button
-                           mdl-button--colored"
-                    id="send">
-              Send
-            </button>
-          </div>
-
-        </div>
-    
-      </footer>
 
     </main>
 

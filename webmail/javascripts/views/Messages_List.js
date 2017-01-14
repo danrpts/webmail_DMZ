@@ -16,13 +16,15 @@ module.exports = View.extend({
     this.listenTo(this.collection, 'batch:request', this.render);
     this.listenTo(this.collection, 'batch:sync', this.render);
 
-    // Trigger re redner for things such as removes, merges, etc...
-    this.listenTo(this.collection, 'change update', this.render);
+    // Trigger rerender for things such as removes, merges, etc...
+    //this.listenTo(this.collection, 'change update', this.render);
+
   },
 
   postrender: function () {
     
-    console.log("Rendering messages list of size %i and is pending %s", this.collection.length, this.collection.isPending());
+    console.log("Rendering messages list of size %i and is pending %s",
+      this.collection.length, this.collection.isPending());
     
     componentHandler.upgradeElements(this.el);
     

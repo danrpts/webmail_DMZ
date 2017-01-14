@@ -14,7 +14,7 @@ var ChipsList = View.extend({
   template: require('../../templates/chips_list.html'),
 
   initialize: function () {
-    this.listenTo(this.collection, 'update', this.render);
+    this.listenTo(this.collection, 'reset update', this.render);
   },
 
   postrender: function () {
@@ -49,13 +49,13 @@ module.exports = View.extend({
   },
 
   events: {
-    'keydown #chips-input': 'onInputKeydown'
+    'keydown #chips-textarea': 'onKeydown'
   },
 
   // Todo: fetch data list items and find select event
-  onInputSelect: function (event) {},
+  onSelect: function (event) {},
 
-  onInputEnter: function (event) {
+  onEnter: function (event) {
     var $input = this.$(event.currentTarget);
     var value = $input.val().trim();
     var collection = this.collection;
@@ -66,16 +66,16 @@ module.exports = View.extend({
     }
   },
 
-  onInputBackspace: function (event) {
+  onBackspace: function (event) {
     var $input = this.$(event.currentTarget);
     var value = $input.val();
     if (!value) this.collection.pop();
   },
 
-  onInputKeydown: function (event) {
+  onKeydown: function (event) {
     switch (event.which) {
-      case keycodes['backspace']: this.onInputBackspace.apply(this, arguments); break;
-      case keycodes['enter']: this.onInputEnter.apply(this, arguments); break;
+      case keycodes['backspace']: this.onBackspace.apply(this, arguments); break;
+      case keycodes['enter']: this.onEnter.apply(this, arguments); break;
     }
   }
 

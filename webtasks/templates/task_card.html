@@ -1,0 +1,34 @@
+<div class="mdl-grid">
+  <div class="mdl-cell mdl-cell--4-col mdl-cell--4-offset-desktop mdl-cell--1-offset-tablet mdl-cell--middle custom-cell--center">
+    <div class="mdl-card mdl-shadow--2dp">
+      <div class="mdl-card__menu">
+        <i class="material-icons"><% has('completed') ? print('check_box') : print('check_box_outline_blank') %></i>
+      </div>
+      <div class="mdl-card__title"></div>
+      <div class="mdl-card__supporting-text">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <input class="mdl-textfield__input task-input" id="title" type="text" length="23" <% has('completed') && print('disabled')%> >
+          <label class="mdl-textfield__label" for="inputTitle"><%- get('title') %></label>
+        </div>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+          <textarea class="mdl-textfield__input task-input" id="details" type="text" rows= "1" <% has('completed') && print('disabled') %>></textarea>
+          <label class="mdl-textfield__label" for="inputDetails"><% has('details') ? print(get('details')) : print("Add details") %></label>
+        </div>
+      </div>
+      <div class="mdl-card__actions mdl-card--border">
+        <button href="/<" class="mdl-button mdl-js-button mdl-button--icon">
+          <i class="material-icons">arrow_back</i>
+        </button>
+        <button href="/" class="mdl-button mdl-js-button mdl-button--icon">
+          <i class="material-icons">home</i>
+        </button>
+        <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="task-delete">
+          Delete
+        </button>
+        <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" id="task-toggle">
+          Toggle Completion
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
