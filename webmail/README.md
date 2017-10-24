@@ -3,7 +3,6 @@
 ## Description
 Welcome Mail is a webmail application focused on bringing a simplified user experience back to email.
 
-![login](screenshots/welcomemail-login-640.png)
 ![inbox](screenshots/welcomemail-inbox-640.png)
 
 ## Installation
