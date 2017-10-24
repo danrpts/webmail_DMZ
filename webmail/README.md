@@ -1,7 +1,5 @@
 # Welcome Mail
-
-## Description
-Welcome Mail is a webmail application focused on bringing a simplified user experience back to email.
+A webmail application focused on delivering a simplified user experience to email.
 
 ![inbox](screenshots/frame-welcomemail-inbox.png)
 
@@ -25,10 +23,10 @@ To start the Welcome Mail application we simply run two scripts from our root we
     npm start
 
 ## Contributing
-Please submit issues and pull request to the [Webstack](https://github.com/danrpts/webstack) repository!
+Please submit all issues and pull request to the [Webstack](https://github.com/danrpts/webstack) repository!
 
 ## Credits
 Daniel Peterson <danrpts@gmail.com>
 
 ## License
-GPL-3.0
+GPLv3
