@@ -23,7 +23,7 @@ To start the Welcome Mail application we simply run two scripts from our root we
     npm start
 
 ## Contributing
-Please submit issues and pull request to the [Webstack](https://github.com/danrpts/webstack) repository!
+Please submit all issues and pull request to the [Webstack](https://github.com/danrpts/webstack) repository!
 
 ## Credits
 Daniel Peterson <danrpts@gmail.com>
