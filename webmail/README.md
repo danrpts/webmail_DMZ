@@ -3,7 +3,8 @@
 ## Description
 Welcome Mail is a webmail application focused on bringing a simplified user experience back to email.
 
-![inbox](screenshots/welcomemail-inbox-640.png)
+![login](../screenshots/welcomemail-login-640.png)
+![inbox](../screenshots/welcomemail-inbox-640.png)
 
 ## Installation
 This application is a demo that installs with [Webstack](https://github.com/danrpts/webstack), a boilerplate project for building JavaScript single page applications with Gulp, Express, and Backbone. To install Welcome Mail we must simply clone and install Webstack:
