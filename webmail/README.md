@@ -1,5 +1,5 @@
 # Welcome Mail
----
+
 ## Description
 Welcome Mail is a webmail application focused on bringing a simplified user experience back to email.
 
