@@ -29,4 +29,4 @@ Please submit issues and pull request to the [Webstack](https://github.com/danrp
 Daniel Peterson <danrpts@gmail.com>
 
 ## License
-GPL-3.0
+GPLv3
