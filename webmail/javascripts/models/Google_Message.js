@@ -44,12 +44,12 @@ function extract (payload) {
 
     // multipart/mixed, multipart/digest, multipart/related, any non-spec multipart
 
+    // Todo: properly handle attachments multipart/related
+
     // Extract all parts and combine serially
 
     // Todo: combine by partId
     return _.reduce(payload.parts, function (body, part) {
-
-      //console.log(part);
 
       return body += extract(part);
 
@@ -70,7 +70,8 @@ function extract (payload) {
 
   }
 
-  return 'Unsupported Mime Type';
+  // Inavlid mime type error
+  return -1;
 
 }
 
