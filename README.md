@@ -17,9 +17,14 @@ This web application consumes [RFC 2822](https://tools.ietf.org/html/rfc2822) me
  - webstack/webclient/webmail/javascripts/config/google.json
 
 ## Usage
-To start the Welcome Mail application we simply run two scripts from our root webstack/ directory. We first tell Gulp to build the project, and then run our npm script to start serving it. By default, the application will be served at [http://localhost:3000](http://localhost:3000).
+To start the Welcome Mail application we simply run two scripts from our root webstack/ directory. We first tell Gulp to build and watch the project, and then **in a new terminal we** run our npm start script to serve it. By default, the application will be served at [http://localhost:3000](http://localhost:3000).
 
-    gulp --build webmail
+Terminal 1:
+
+    gulp --client webmail
+    
+Terminal 2:
+
     npm start
 
 ## Contributing
